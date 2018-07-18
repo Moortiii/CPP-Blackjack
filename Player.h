@@ -1,26 +1,21 @@
-//
-// Created by Morten on 10.07.2018.
-//
+#ifndef BLACKJACK_PLAYER_H
+#define BLACKJACK_PLAYER_H
 
-#ifndef CARDGAME_PLAYER_H
-#define CARDGAME_PLAYER_H
-
-#include <vector>
+#include <string>
 #include <memory>
+#include <vector>
 #include "Card.h"
 #include "Deck.h"
 
 class Player {
 public:
-    std::vector<std::shared_ptr<Card>> hand;
-    const std::string name;
+    explicit Player(std::string const& name);
     void hit(Deck& deck);
-    Player(std::string const& name);
-    void printHand() const;
-    int countHand() const;
-    int countAces() const;
+public:
+    std::string const name;
+    std::vector<std::shared_ptr<Card>> hand;
 
-    void hit(Deck &deck, const std::shared_ptr<Card> &card);
+    void print();
 };
 
-#endif //CARDGAME_PLAYER_H
+#endif

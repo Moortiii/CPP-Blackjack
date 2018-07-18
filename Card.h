@@ -1,17 +1,17 @@
-#ifndef CARDGAME_CARD_H
-#define CARDGAME_CARD_H
+#ifndef BLACKJACK_CARD_H
+#define BLACKJACK_CARD_H
+
 
 #include <string>
 
 class Card {
 public:
-    void Print();
-    friend std::ostream& operator<<(std::ostream& os, Card const& card);
-    Card(int value, const std::string &suit);
-public:
+    const int number;
     const int value;
-    const std::string suit;
-};
+    std::string const suit;
 
+public:
+    Card(const std::string &suit, int number);
+};
 
 #endif

@@ -1,16 +1,10 @@
 #include <iostream>
 #include "Card.h"
 
-void Card::Print() {
-    std::cout << value << " of " << suit << std::endl;
-}
+Card::Card(std::string const &suit, int number) : suit(suit),
+                                                  number(number),
+                                                  value(number > 10 ? 10 : number)
 
-std::ostream& operator<<(std::ostream& os, Card const& card) {
-    os << card.value << " of " << card.suit;
-    return  os;
+{
+    std::cout << "CARD::CREATED -> " << number << " of " << suit << std::endl;
 }
-
-Card::Card(int value, std::string const& suit) : suit(suit), value(value) {
-    std::cout << "Created " << value << " of " << suit << std::endl;
-}
-

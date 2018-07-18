@@ -1,32 +1,30 @@
-#include <bits/uses_allocator.h>
 #include <algorithm>
-#include <random>
-#include <chrono>
-#include <memory>
 #include "Deck.h"
 
-void Deck::add(Card const& card) {
-    cards.push_back(std::make_shared<Card>(card));
+Deck::Deck() {
+    std::string const suits[] = { "Diamonds", "Spades", "Clubs", "Hearts" };
+
+    for(auto const& suit : suits) {
+        for(int i = 0; i < 13; i++)
+            cards.push_back(std::make_shared<Card>(Card(suit, (i + 1))));
+    }
+
+    engine.seed(unsigned(seed));
+    shuffle();
 }
 
-void Deck::remove(Card &card) {
-    cards.erase(cards.begin());
-}
-
-void Deck::shuffle() {
-    std::shuffle(cards.begin(), cards.end(), std::default_random_engine{ unsigned(std::chrono::system_clock::now().time_since_epoch().count()) });
-}
-
-std::shared_ptr<Card>& Deck::draw() {
+// We always draw from the top of the deck
+std::shared_ptr<Card> Deck::draw() {
     return *cards.begin();
 }
 
-void Deck::create() {
-    std::string suits[] = { "Diamonds", "Clubs", "Hearts", "Spades" };
+// TODO: Drawing and discarding should be done at the same time
+// And we always erase the top card after drawing it
+void Deck::discard() {
+    cards.erase(cards.begin());
+}
 
-    for(std::string const& suit : suits) {
-        for(int i = 0; i < 13; i++) {
-            Deck::add(Card(i + 1, suit));
-        }
-    }
+// Shuffle the deck using a seed based on the the value of the system clock when the game was started
+void Deck::shuffle() {
+    std::shuffle(cards.begin(), cards.end(), engine);
 }
